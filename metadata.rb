@@ -10,7 +10,7 @@ supports 'debian'
 supports 'ubuntu'
 supports 'windows'
 
-depends 'chef-sugar'
+#depends 'chef-sugar'
 
 source_url 'https://github.com/chef-cookbooks/firewall'
 issues_url 'https://github.com/chef-cookbooks/firewall/issues'

@@ -1,0 +1,42 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: sbrown_eu_west_2
+  region: eu-west-2
+  availability_zone: b
+  require_chef_omnibus: true
+  instance_type: t2.medium
+  associate_public_ip: true
+  shared_credentials_profile: success-engineering
+
+provisioner:
+  name: chef_zero
+  chef_license: accept-no-persist
+  attributes:
+    firewall:
+      allow_ssh: true
+      allow_winrm: true
+      allow_mosh: true
+      allow_loopback: true
+      allow_icmp: true
+      firewalld:
+        permanent: true
+
+transport:
+  ssh_key: ~/.ssh/sbrown_uk_west_2
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: rhel-7
+
+suites:
+  - name: default
+    run_list:
+      - recipe[firewall::default]
+      - recipe[firewall-test::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
